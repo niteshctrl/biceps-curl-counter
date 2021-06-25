@@ -4,5 +4,16 @@
 * Angle is calculated using the coordinates of shoulder, elbow and wrist landmarks as predicted by the model.
 * OpenCV is used for illustration and visualization.
 
-### TBD:
-* Currently only implemented for left hand curls. Can be extended to both hand in the future.
+## Table of Contents
+* [Installation and Demo](#Installation-and-Demo)
+* [Description](#Description)
+* [References and Credits](#References-and-Credits)
+
+
+## Installation and Demo
+
+
+## Description
+
+
+## References and Credits
