@@ -27,8 +27,10 @@ def calc_angle(a,b,c): # 3D points
 def infer():
     mp_drawing = mp.solutions.drawing_utils     # Connecting Keypoints Visuals
     mp_pose = mp.solutions.pose                 # Keypoint detection model
-    flag = None     # Flag which stores hand position(Either UP or DOWN)
-    count = 0       # Storage for count of bicep curls
+    left_flag = None     # Flag which stores hand position(Either UP or DOWN)
+    left_count = 0       # Storage for count of bicep curls
+    right_flag = None
+    right_count = 0
 
     cap = cv2.VideoCapture(0)
     pose = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.5) # Lnadmark detection model instance
@@ -49,40 +51,59 @@ def infer():
         try:
             # Extract Landmarks
             landmarks = results.pose_landmarks.landmark
-            shoulder = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER]
-            elbow = landmarks[mp_pose.PoseLandmark.LEFT_ELBOW]
-            wrist = landmarks[mp_pose.PoseLandmark.LEFT_WRIST]
+            left_shoulder = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER]
+            left_elbow = landmarks[mp_pose.PoseLandmark.LEFT_ELBOW]
+            left_wrist = landmarks[mp_pose.PoseLandmark.LEFT_WRIST]
+            right_shoulder = landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+            right_elbow = landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW]
+            right_wrist = landmarks[mp_pose.PoseLandmark.RIGHT_WRIST]
 
             # Calculate angle
-            angle = calc_angle(shoulder, elbow, wrist)      #  Get angle 
+            left_angle = calc_angle(left_shoulder, left_elbow, left_wrist)      #  Get angle 
+            right_angle = calc_angle(right_shoulder, right_elbow, right_wrist)
 
             # Visualize angle
             cv2.putText(image,\
-                    str(angle), \
-                        tuple(np.multiply([elbow.x, elbow.y], [640,480]).astype(int)),\
+                    str(left_angle), \
+                        tuple(np.multiply([left_elbow.x, left_elbow.y], [640,480]).astype(int)),\
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255),2,cv2.LINE_AA)
+            cv2.putText(image,\
+                    str(right_angle), \
+                        tuple(np.multiply([right_elbow.x, right_elbow.y], [640,480]).astype(int)),\
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255),2,cv2.LINE_AA)
         
             # Counter 
-            if angle > 160:
-                flag = 'down'
-            if angle < 40 and flag=='down':
-                count += 1
-                flag = 'up'
+            if left_angle > 160:
+                left_flag = 'down'
+            if left_angle < 50 and left_flag=='down':
+                left_count += 1
+                left_flag = 'up'
+
+            if right_angle > 160:
+                right_flag = 'down'
+            if right_angle < 50 and right_flag=='down':
+                right_count += 1
+                right_flag = 'up'
             
         except:
             pass
 
         # Setup Status Box
-        cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
-        cv2.putText(image, str(count), (10,60), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
+        cv2.rectangle(image, (0,0), (1024,73), (10,10,10), -1)
+        cv2.putText(image, 'Left=' + str(left_count) + '    Right=' + str(right_count),
+                          (10,60), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
 
         # Render Detections
         mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
         cv2.imshow('MediaPipe feed', image)
 
-        if cv2.waitKey(10) & 0xFF == ord('q'):
+        k = cv2.waitKey(30) & 0xff  # Esc for quiting the app
+        if k==27:
             break
+        elif k==ord('r'):       # Reset the counter on pressing 'r' on the Keyboard
+            left_count = 0
+            right_count = 0
 
     cap.release()
     cv2.destroyAllWindows()
