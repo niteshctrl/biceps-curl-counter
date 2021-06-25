@@ -1,28 +1,15 @@
 absl-py==0.13.0
 attrs==21.2.0
-backcall @ file:///home/ktietz/src/ci/backcall_1611930011877/work
 certifi==2021.5.30
-decorator @ file:///tmp/build/80754af9/decorator_1621259047763/work
-ipykernel @ file:///tmp/build/80754af9/ipykernel_1607452791405/work/dist/ipykernel-5.3.4-py3-none-any.whl
-ipython @ file:///tmp/build/80754af9/ipython_1617120888991/work
-ipython-genutils @ file:///tmp/build/80754af9/ipython_genutils_1606773439826/work
-jedi @ file:///tmp/build/80754af9/jedi_1606932531272/work
-jupyter-client @ file:///tmp/build/80754af9/jupyter_client_1616770841739/work
-jupyter-core @ file:///tmp/build/80754af9/jupyter_core_1612213314396/work
-mediapipe==0.8.5
-numpy==1.20.3
+cycler==0.10.0
+kiwisolver==1.3.1
+matplotlib==3.4.2
+mediapipe==0.8.6
+numpy==1.21.0
 opencv-contrib-python==4.5.2.54
 opencv-python==4.5.2.54
-parso==0.7.0
-pexpect @ file:///tmp/build/80754af9/pexpect_1605563209008/work
-pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
-prompt-toolkit @ file:///tmp/build/80754af9/prompt-toolkit_1616415428029/work
+Pillow==8.2.0
 protobuf==3.17.3
-ptyprocess @ file:///tmp/build/80754af9/ptyprocess_1609355006118/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
-Pygments @ file:///tmp/build/80754af9/pygments_1621606182707/work
-python-dateutil @ file:///home/ktietz/src/ci/python-dateutil_1611928101742/work
-pyzmq==20.0.0
-six @ file:///tmp/build/80754af9/six_1623709665295/work
-tornado @ file:///tmp/build/80754af9/tornado_1606942317143/work
-traitlets @ file:///home/ktietz/src/ci/traitlets_1611929699868/work
-wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
+pyparsing==2.4.7
+python-dateutil==2.8.1
+six==1.16.0
